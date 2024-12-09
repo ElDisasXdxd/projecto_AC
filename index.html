@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projecto: asientos contables</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f9;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 10px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .form-group input[type="number"] {
+            width: 48%;
+            display: inline-block;
+        }
+
+        .form-group button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .form-group button:hover {
+            background-color: #45a049;
+        }
+
+        .result {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Projecto: Asientos Contables</h1>
+
+        <div class="form-group">
+            <label for="cuenta">Cuenta:</label>
+            <input type="text" id="cuenta" placeholder="Nombre de la cuenta" required>
+        </div>
+
+        <div class="form-group">
+            <label for="monto">Monto:</label>
+            <input type="number" id="debito" placeholder="Débito" step="0.01">
+            <input type="number" id="credito" placeholder="Crédito" step="0.01">
+        </div>
+
+        <div class="form-group">
+            <button onclick="agregarAsiento()">Agregar Asiento</button>
+        </div>
+
+        <div class="result">
+            <h2>Asientos Realizados</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Cuenta</th>
+                        <th>Débito</th>
+                        <th>Crédito</th>
+                    </tr>
+                </thead>
+                <tbody id="tabla-asientos">
+                    <!-- Aquí se agregarán los asientos -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Función para agregar un asiento contable
+        function agregarAsiento() {
+            const cuenta = document.getElementById("cuenta").value;
+            const debito = parseFloat(document.getElementById("debito").value) || 0;
+            const credito = parseFloat(document.getElementById("credito").value) || 0;
+
+            // Verificar que los campos no estén vacíos
+            if (!cuenta || (debito === 0 && credito === 0)) {
+                alert("Por favor, ingrese los datos correctamente.");
+                return;
+            }
+
+            // Crear una nueva fila para la tabla
+            const tablaAsientos = document.getElementById("tabla-asientos");
+            const nuevaFila = document.createElement("tr");
+
+            // Crear las celdas para la cuenta, débito y crédito
+            const celdaCuenta = document.createElement("td");
+            celdaCuenta.textContent = cuenta;
+
+            const celdaDebito = document.createElement("td");
+            celdaDebito.textContent = debito > 0 ? debito.toFixed(2) : "-";
+
+            const celdaCredito = document.createElement("td");
+            celdaCredito.textContent = credito > 0 ? credito.toFixed(2) : "-";
+
+            // Añadir las celdas a la fila
+            nuevaFila.appendChild(celdaCuenta);
+            nuevaFila.appendChild(celdaDebito);
+            nuevaFila.appendChild(celdaCredito);
+
+            // Añadir la fila a la tabla
+            tablaAsientos.appendChild(nuevaFila);
+
+            // Limpiar los campos de entrada
+            document.getElementById("cuenta").value = '';
+            document.getElementById("debito").value = '';
+            document.getElementById("credito").value = '';
+        }
+    </script>
+</body>
+</html>
